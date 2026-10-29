@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* Paleta oficial de Mirena */
+:root {
+  --rosa: #f8c8d4; /* primario: estructura */
+  --fucsia: #e63980; /* acento: solo llamadas a la acción */
+  --azul: #6fa8dc; /* secundario: iconos, badges */
+  --durazno: #fce4d6; /* fondos de tarjetas */
+  --carbon: #222222; /* texto */
+  --blanco: #ffffff;
+  --sombra: 0 18px 40px -18px rgb(34 34 34 / 0.35);
+}
+
+@theme inline {
+  --color-rosa: var(--rosa);
+  --color-fucsia: var(--fucsia);
+  --color-azul: var(--azul);
+  --color-durazno: var(--durazno);
+  --color-carbon: var(--carbon);
+  --font-sans: var(--font-jost);
+  --font-display: var(--font-playfair);
+  --font-script: var(--font-allura);
+}
+
+body {
+  background: var(--blanco);
+  color: var(--carbon);
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--carbon);
+  outline-offset: 3px;
+}
+
+/* Detalle manuscrito, solo para frases cortas y grandes (como el logo) */
+.font-script { font-family: var(--font-allura), cursive; font-weight: 400; }
+
+/* ---------- Botones ---------- */
+/* Texto blanco, grande y en negrita sobre fucsia (cumple contraste WCAG para texto grande) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--fucsia);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  padding: 0.8rem 1.9rem;
+  border-radius: 999px;
+  border: 0;
+  box-shadow: 0 12px 26px -10px rgb(230 57 128 / 0.75);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -10px rgb(230 57 128 / 0.85);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--carbon);
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--carbon);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-ghost:hover { background: var(--carbon); color: #fff; }
+
+/* ---------- Tarjetas y formularios ---------- */
+.card {
+  color: var(--carbon);
+  background: var(--durazno);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+.input {
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid rgb(34 34 34 / 0.6);
+  border-radius: 0.8rem;
+  padding: 0.6rem 0.85rem;
+  color: var(--carbon);
+}
+
+.badge {
+  display: inline-block;
+  background: var(--azul);
+  color: var(--carbon);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.15rem 0.75rem;
+  border-radius: 999px;
+}
+
+/* ---------- Efecto acuarela ---------- */
+.mancha {
+  position: absolute;
+  border-radius: 62% 38% 55% 45% / 48% 58% 42% 52%;
+  filter: blur(48px);
+  opacity: 0.85;
+}
+
+.sombra { box-shadow: var(--sombra); }
+
+/* Tarjeta de producto: se eleva suavemente al pasar el cursor */
+.producto { transition: transform 0.3s, box-shadow 0.3s; }
+.producto:hover { transform: translateY(-6px); box-shadow: 0 26px 46px -18px rgb(34 34 34 / 0.4); }
+
+/* ---------- Animaciones (se desactivan si el usuario lo prefiere) ---------- */
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes cinta {
+  to { transform: translateX(-50%); }
+}
+.flotar { animation: flotar 7s ease-in-out infinite; }
+.cinta { animation: cinta 34s linear infinite; width: max-content; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flotar, .cinta { animation: none; }
+  .producto, .btn, .btn-ghost { transition: none; }
+}
